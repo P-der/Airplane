@@ -30,6 +30,7 @@
 		var width = canvas.get(0).width;
 		var height = canvas.get(0).height;
 		var direction = null;
+		var number = 0;
 		var score = 0;
 		var keydown = [];
 		var speed = 8;
@@ -115,7 +116,7 @@
 		  	clearInterval(timer1);
 		  	clearInterval(timer2);
 		    ctx.clearRect(0,0,width,height);
-		    ctx.fillText(" 击杀 " + score + "敌机", 80, 120);
+		    ctx.fillText(" 击杀 " + number + "敌机", 80, 120);
 		  }  
 
 		}
@@ -196,7 +197,8 @@
 					}
 					if(foe.active&&foe.lift<=0){
 						foe.active = false;
-						score++;
+						number++;
+						score+=10;
 					}
 				})
 			}
