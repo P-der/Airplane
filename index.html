@@ -18,13 +18,35 @@
 		div{
 			text-align: center;
 		}
+		button{
+			display: none;
+			margin: 0 auto;
+			border-radius: 3px;
+			background-color:aqua;
+			width: 50px;
+			text-align: center;
+		}
+		img{
+			display: none;
+		}
 	</style>
 </head>
 <body>
 	<div id='content'>
 	</div>
+	<button>重玩</button>
+	<img src="./img/bullet.png">
+	<img src="./img/hero.png">
+	<img src="./img/enemy.png">
 	<script type="text/javascript" src="./jquery.js"></script>
 	<script src="./test.js"></script>
+	<!-- <canvas id="oc" width=500 height=500></canvas> -->
+	<!-- <script>
+		var oc = $('#oc')[0];
+		var od = oc.getContext('2d');
+		var oi = $('img').eq(0);
+		od.drawImage(oi[0],100,100,6,10)
+	</script> -->
 	
 	<!-- <script type="text/javascript">
 		var canvas = $("<canvas id='canvas' width='600' height='1000'></canvas>");
