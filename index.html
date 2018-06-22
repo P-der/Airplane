@@ -9,11 +9,17 @@
 			padding: 0px;
 			margin: 0px;
 		}
-		canvas{
+		#content{
+			box-sizing: border;
+			margin: 0 auto;
+			width: 360px;
+			height: 600px;
 			border: 1px solid black;
-			    cursor: none;
-			    width: 360px;
-			    height:600px;
+		}
+		canvas{
+			cursor: none;
+			width: 100%;;
+			height:100%;
 		}
 		div{
 			text-align: center;
@@ -28,6 +34,19 @@
 		}
 		img{
 			display: none;
+		}
+		@media (max-width: 400px) { 
+			#content{
+				width: 100%;
+				height: 100%;
+				border:none;
+				border-bottom:1px solid black;
+			}
+			button{
+				display: none;
+				width: 100%;
+				height: 20px;
+			}
 		}
 	</style>
 </head>

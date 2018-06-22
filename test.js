@@ -1,4 +1,10 @@
-(function(){
+console.log(screen.width);
+var sWidth = screen.width;
+var isPc = true;
+if(sWidth<400){
+    isPc = false
+}
+(function(isPc){
     var canvas = $("<canvas id='canvas' width='600' height='1000'></canvas>");
     var oButton = $('button').eq(0);
     var finished = false;
@@ -240,36 +246,67 @@
     canvas.appendTo('#content');
     var ctx = canvas.get(0).getContext('2d');
 
-    //按键监听
-    for(var i=0; i<128; i++){
-        keydown[i] = false;
-    }
-    $(document).keydown(function(e){
-        keydown[e.which] = true;
-    })
-    $(document).keyup(function(e){
-        keydown[e.which] = false;
-    });
+    //按键监听 
     oButton.on('click',function(){
         location.reload();
     })
-    function key(){
-        if(keydown[37]){
-            player.move(-10,0) 
+    if(isPc){
+        for(var i=0; i<128; i++){
+            keydown[i] = false;
         }
-        if(keydown[38]){
-            player.move(0,-4) 
-        }
-        if(keydown[39]){
-            player.move(10,0) 
-        }
-        if(keydown[40]){
-            player.move(0,4) 
-        }
-        if(keydown[32]){
-        player.addBullet(1);
-        }
+        $(document).keydown(function(e){
+            keydown[e.which] = true;
+        })
+        $(document).keyup(function(e){
+            keydown[e.which] = false;
+        });
+       
+        function key(){
+            if(keydown[37]){
+                player.move(-10,0) 
+            }
+            if(keydown[38]){
+                player.move(0,-4) 
+            }
+            if(keydown[39]){
+                player.move(10,0) 
+            }
+            if(keydown[40]){
+                player.move(0,4) 
+            }
+            if(keydown[32]){
+            player.addBullet(1);
+            }
+        } 
+    }else{
+        $(document).on('touchstart',(e)=>{
+            var clientX = Math.floor(e.changedTouches[0].clientX),
+                clientY = Math.floor(e.changedTouches[0].clientY);
+            // console.log(clientX,clientY)
+            // var event =e||window.event;
+			player.disX = clientX-player.x;
+			player.disY = clientY-player.y;
+			// console.log('a');
+			// document.onmousemove =function (e){
+			// 	var event = e||window.event;
+			// 	demo.style.left = event.clientX - disX +'px';
+			// 	demo.style.top = event.clientY - disY +'px';
+			// 	console.log(demo.style.left);
+			// };
+			// document.onmouseup =function(e){
+			// 	document.onmousemove = null;
+			// 	document.onmouseup = null;
+			// };
+
+        }).on('touchmove',(e)=>{
+            var clientX = Math.floor(e.changedTouches[0].clientX),
+                clientY = Math.floor(e.changedTouches[0].clientY);
+            player.x = clientX - player.disX<0?0:(clientX - player.disX>oWidth-player.width?oWidth-player.width:clientX - player.disX);
+            player.y = clientY - player.disY<0?0:(clientY - player.disY>oHeight-player.height?oHeight-player.height:clientY - player.disY);
+            console.log(clientX,clientY)
+        })
     }
+    
 
     function impact(foe){
         if(foe.active){
@@ -314,7 +351,11 @@
             clearInterval(timer);
             return;
         }
-        key();
+        if(isPc){
+           key(); 
+        }else{
+            player.addBullet(1); 
+        }
         player.bullet.forEach(function(item,index,arr){
             item.move(-20);
             if(item.y==(oHeight-this.height||0)){
@@ -389,4 +430,4 @@
         }
         drwaAll();
     },16)
-})()
+})(isPc)
